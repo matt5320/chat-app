@@ -1,0 +1,28 @@
+<div class="chat" @click="selectGroupChat($event)">
+  <img
+    class="chat-icon"
+    src=""
+    onerror="this.src='./assets/default-user-icon.svg'"
+    alt=""
+  />
+  <div class="chat-text">
+    <h2>{{ groupChat.value.object.name }}</h2>
+    <graffiti-discover
+      v-slot="{ objects: messageObjects, isInitialPolling }"
+      :channels="[groupChat.value.object.channel]"
+      :schema="{
+        properties: {
+          value: {
+            required: ['content', 'published'],
+            properties: {
+              content: { type: 'string' },
+              published: { type: 'number' }
+            }
+          }
+        }
+      }"
+    >
+      <p>{{getLastMessage(messageObjects) ?? "..."}}</p>
+    </graffiti-discover>
+  </div>
+</div>

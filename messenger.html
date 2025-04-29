@@ -1,0 +1,50 @@
+<div class="messenger-container">
+  <div class="messenger-header">
+    <h2 class="messenger-title">{{getGC.name}}</h2>
+    <span
+      class="material-symbols-outlined"
+      v-if="getGC.name"
+      @click="changeGCName($graffitiSession)"
+    >
+      info
+    </span>
+  </div>
+  <div class="messages-container">
+    <graffiti-discover
+      v-if="getGC.channel"
+      v-slot="{ objects, isInitialPolling }"
+      :channels="[getGC.channel]"
+      :schema="{
+        properties: {
+          value: {
+            required: ['content', 'published'],
+            properties: {
+              content: { type: 'string' },
+              published: { type: 'number' }
+            }
+          }
+        }
+      }"
+    >
+      <span
+        v-for="object of objects.toSorted((a, b) => b.value.published - a.value.published)"
+        :class="'message' + self(object, $graffitiSession)"
+        >{{ object.value.content }}
+      </span>
+    </graffiti-discover>
+  </div>
+  <form class="send" @submit.prevent="sendMessage($graffitiSession.value)">
+    <input
+      type="text"
+      v-model="message"
+      placeholder="Message"
+      ref="messageInput"
+      :disabled="getGC.channel === '' || !$graffitiSession.value"
+    />
+    <input
+      type="submit"
+      value="Send"
+      :disabled="sending || getGC.channel === '' || !$graffitiSession.value"
+    />
+  </form>
+</div>

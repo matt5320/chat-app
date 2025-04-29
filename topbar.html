@@ -1,0 +1,21 @@
+<header>
+  <span class="header-left">
+    <router-link to="/home"><h1>Disturb Me!</h1></router-link>
+  </span>
+  <span class="header-right">
+    <router-link to="/schedule">
+      <span class="material-symbols-outlined"> event_note </span>
+    </router-link>
+    <router-link to="/profile">
+      <span class="profile">
+        {{$graffitiSession.value.actor}}
+        <img
+          class="profile-icon"
+          src=""
+          onerror="this.src='./assets/default-user-icon.svg'"
+          alt=""
+        />
+      </span>
+    </router-link>
+  </span>
+</header>

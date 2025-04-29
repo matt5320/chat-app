@@ -1,0 +1,37 @@
+<div class="chat-list-container">
+  <div class="chat-list-header">
+    <h2>Chats</h2>
+    <span
+      class="material-symbols-outlined create"
+      @click="createGroupChat($graffitiSession.value)"
+    >
+      edit_square
+    </span>
+  </div>
+  <graffiti-discover
+    v-slot="{ objects: groupChats, isInitialPolling }"
+    :channels="channels"
+    :schema="{
+    properties: {
+      value: {
+        required: ['activity', 'object'],
+        properties: {
+          activity: {type: 'string'},
+          object: {
+            properties: {
+              value: {
+                required: ['type', 'name', 'channel'],
+                type: 'string',
+                name: 'string',
+                channel: 'string'
+              }
+            }
+          }
+        }
+      }
+    }
+  }"
+  >
+    <chat v-for="gc of groupChats" :group-chat="gc"></chat>
+  </graffiti-discover>
+</div>
