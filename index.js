@@ -5,12 +5,15 @@ import { GraffitiRemote } from "@graffiti-garden/implementation-remote";
 import { GraffitiPlugin } from "@graffiti-garden/wrapper-vue";
 import { Login } from "./login.js";
 import { Home } from "./home.js";
+import { Profile } from "./profile.js";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: "/", component: Login },
     { path: "/home", component: Home },
+    { path: "/profile/:user", component: Profile },
+    { path: "/:pathMatch(.*)*", redirect: "/home" },
   ],
 });
 

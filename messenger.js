@@ -40,6 +40,8 @@ export async function Messenger() {
       async changeGCName(session) {
         const name = prompt("New name:");
 
+        if (name === "") return;
+
         await this.$graffiti.patch(
           {
             value: [

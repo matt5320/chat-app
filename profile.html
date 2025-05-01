@@ -1,0 +1,56 @@
+<div class="profile-page">
+  <topbar></topbar>
+  <div class="profile-container">
+    <div class="profile-bubble">
+      <graffiti-discover
+        v-slot="{ objects, isInitialPolling }"
+        :channels="['designftw']"
+        :schema="{
+        properties: {
+          value: {
+            required: ['describes', 'name', 'pronouns', 'bio'],
+            properties: {
+              describes: { type: 'string', const: $route.params.user },
+              name: { type: 'string' },
+              pronouns: { type: 'string' },
+              bio: { type: 'string' },
+            },
+          },
+        }
+      }"
+      >
+        <div class="profile-header">
+          <img
+            class="profile-header-icon"
+            src=""
+            onerror="this.src='./assets/default-user-icon.svg'"
+            alt=""
+          />
+          <div class="profile-header-text">
+            <h2>{{ objects[0]?.value.name }}</h2>
+            <p>{{ objects[0]?.value.pronouns }}</p>
+          </div>
+          <span
+            v-if="$route.params.user === $graffitiSession.value?.actor"
+            class="material-symbols-outlined profile-edit-button"
+            @click="editProfile(objects[0]?.url,$graffitiSession)"
+          >
+            edit
+          </span>
+        </div>
+        <div class="profile-bubble-attribute">
+          <span class="material-symbols-outlined"> groups </span>
+          <p>{{ friends.length }}</p>
+        </div>
+        <div class="profile-bubble-attribute">
+          <span class="material-symbols-outlined"> schedule </span>
+          <p>{{ schedule }}</p>
+        </div>
+        <div class="profile-bubble-attribute">
+          <span class="material-symbols-outlined"> person_book </span>
+          <p>{{ objects[0]?.value.bio }}</p>
+        </div>
+      </graffiti-discover>
+    </div>
+  </div>
+</div>

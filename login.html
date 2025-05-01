@@ -2,11 +2,6 @@
   <div class="login-container">
     <h1 class="login-title">Disturb Me!</h1>
     <p class="login-message">Login and start chatting!</p>
-    <button
-      class="login-button"
-      @click="$graffiti.login(); $router.push('/home')"
-    >
-      Login
-    </button>
+    <button class="login-button" @click="login($graffitiSession)">Login</button>
   </div>
 </div>

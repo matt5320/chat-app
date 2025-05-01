@@ -11,5 +11,10 @@ export async function Home() {
       Messenger: defineAsyncComponent(Messenger),
     },
     template: await fetch("./home.html").then((r) => r.text()),
+    mounted() {
+      if (!this.$graffitiSession.value) {
+        this.$router.push("/");
+      }
+    },
   };
 }
