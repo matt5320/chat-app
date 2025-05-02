@@ -7,19 +7,23 @@ export async function Login() {
         this.$router.push("/home");
       },
       async createProfile(session) {
-        const profileIterator = await this.$graffiti.discover(["designftw"], {
-          properties: {
-            value: {
-              required: ["describes", "name", "pronouns", "bio"],
-              properties: {
-                describes: { type: "string", const: session.value.actor },
-                name: { type: "string" },
-                pronouns: { type: "string" },
-                bio: { type: "string" },
+        const profileIterator = await this.$graffiti.discover(
+          ["designftw-2025-studio1", "designftw"],
+          {
+            properties: {
+              value: {
+                required: ["generator", "describes", "name", "pronouns", "bio"],
+                properties: {
+                  generator: { type: "string" },
+                  describes: { type: "string", const: session.value.actor },
+                  name: { type: "string" },
+                  pronouns: { type: "string" },
+                  bio: { type: "string" },
+                },
               },
             },
-          },
-        });
+          }
+        );
 
         let profileObj = {};
         for await (const profile of profileIterator) {
@@ -30,12 +34,13 @@ export async function Login() {
         await this.$graffiti.put(
           {
             value: {
+              generator: "https://matt5320.github.io/chat-app/",
               describes: session.value.actor,
               name: session.value.actor,
               pronouns: "she/her",
               bio: "bio here...",
             },
-            channels: ["designftw"],
+            channels: ["designftw-2025-studio1", "designftw"],
           },
           session
         );
