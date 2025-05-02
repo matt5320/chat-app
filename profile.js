@@ -41,7 +41,7 @@ export async function Profile() {
             ],
           },
           url,
-          session
+          session.value
         );
       },
     },

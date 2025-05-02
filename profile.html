@@ -4,13 +4,13 @@
     <div class="profile-bubble">
       <graffiti-discover
         v-slot="{ objects, isInitialPolling }"
-        :channels="['designftw']"
+        :channels="['designftw-2025-studio2', 'designftw']"
         :schema="{
         properties: {
           value: {
             required: ['describes', 'name', 'pronouns', 'bio'],
             properties: {
-              describes: { type: 'string', const: 'https://id.inrupt.com/' + $route.params.user },
+              describes: { type: 'string', const: decodeURIComponent($route.params.user) },
               name: { type: 'string' },
               pronouns: { type: 'string' },
               bio: { type: 'string' },
@@ -31,7 +31,7 @@
             <p>{{ objects[0]?.value.pronouns }}</p>
           </div>
           <span
-            v-if="$route.params.user === $graffitiSession.value?.actor"
+            v-if="decodeURIComponent($route.params.user) === $graffitiSession.value?.actor"
             class="material-symbols-outlined profile-edit-button"
             @click="editProfile(objects[0]?.url,$graffitiSession)"
           >

@@ -1,21 +1,22 @@
 export async function Login() {
   return {
     methods: {
-      async login(session) {
+      async login() {
         this.$graffiti.login();
-        this.createProfile(session);
-        this.$router.push("/home");
       },
-      async createProfile(session) {
+      async createProfile() {
         const profileIterator = await this.$graffiti.discover(
-          ["designftw-2025-studio1", "designftw"],
+          ["designftw-2025-studio2", "designftw"],
           {
             properties: {
               value: {
                 required: ["generator", "describes", "name", "pronouns", "bio"],
                 properties: {
                   generator: { type: "string" },
-                  describes: { type: "string", const: session.value.actor },
+                  describes: {
+                    type: "string",
+                    const: this.$graffitiSession.value.actor,
+                  },
                   name: { type: "string" },
                   pronouns: { type: "string" },
                   bio: { type: "string" },
@@ -29,28 +30,34 @@ export async function Login() {
         for await (const profile of profileIterator) {
           profileObj = { ...profile.object };
         }
-        if (Object.keys(profileObj).length > 0) return;
+        if (Object.keys(profileObj).length > 0) {
+          return;
+        }
 
         await this.$graffiti.put(
           {
             value: {
               generator: "https://matt5320.github.io/chat-app/",
-              describes: session.value.actor,
-              name: session.value.actor,
+              describes: this.$graffitiSession.value.actor,
+              name: this.$graffitiSession.value.actor,
               pronouns: "she/her",
               bio: "bio here...",
             },
-            channels: ["designftw-2025-studio1", "designftw"],
+            channels: ["designftw-2025-studio2", "designftw"],
           },
-          session
+          this.$graffitiSession.value
         );
       },
     },
-    template: await fetch("./login.html").then((r) => r.text()),
-    mounted() {
-      if (this.$graffitiSession.value) {
-        this.$graffiti.logout(this.$graffitiSession.value);
-      }
+    watch: {
+      "$graffitiSession.value"(newSession, oldSession) {
+        if (Object.hasOwn(newSession, "actor")) {
+          this.createProfile().then(() => {
+            this.$router.push("/home");
+          });
+        }
+      },
     },
+    template: await fetch("./login.html").then((r) => r.text()),
   };
 }

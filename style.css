@@ -251,7 +251,8 @@ form.send input[type="text"] {
   flex-direction: column;
   gap: 1rem;
   padding: 2rem;
-  max-width: 400px;
+  width: fit-content;
+  min-width: 300px;
 }
 
 .profile-header {

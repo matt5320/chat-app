@@ -7,12 +7,12 @@
       <span class="material-symbols-outlined"> event_note </span>
     </router-link>
     <router-link
-      :to="`/profile/${$graffitiSession.value?.actor.replace('https://id.inrupt.com/', '')}`"
+      :to="`/profile/${encodeURIComponent($graffitiSession.value?.actor)}`"
     >
       <span class="profile">
         <graffiti-discover
           v-slot="{ objects, isInitialPolling }"
-          :channels="['designftw-2025-studio1', 'designftw']"
+          :channels="['designftw-2025-studio2', 'designftw']"
           :schema="{
             properties: {
               value: {
@@ -38,7 +38,7 @@
         />
       </span>
     </router-link>
-    <router-link to="/">
+    <router-link to="/" @click="$graffiti.logout($graffitiSession.value)">
       <span class="material-symbols-outlined"> logout </span>
     </router-link>
   </span>
