@@ -6,16 +6,19 @@
     <router-link to="/schedule">
       <span class="material-symbols-outlined"> event_note </span>
     </router-link>
-    <router-link :to="`/profile/${$graffitiSession.value?.actor}`">
+    <router-link
+      :to="`/profile/${$graffitiSession.value?.actor.replace('https://id.inrupt.com/', '')}`"
+    >
       <span class="profile">
         <graffiti-discover
           v-slot="{ objects, isInitialPolling }"
-          :channels="['designftw']"
+          :channels="['designftw-2025-studio1', 'designftw']"
           :schema="{
             properties: {
               value: {
-                required: ['describes', 'name', 'pronouns', 'bio'],
+                required: ['generator','describes', 'name', 'pronouns', 'bio'],
                 properties: {
+                  generator: {type: 'string'},
                   describes: { type: 'string', const: $graffitiSession.value?.actor },
                   name: { type: 'string' },
                   pronouns: { type: 'string' },

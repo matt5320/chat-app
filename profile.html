@@ -10,7 +10,7 @@
           value: {
             required: ['describes', 'name', 'pronouns', 'bio'],
             properties: {
-              describes: { type: 'string', const: $route.params.user },
+              describes: { type: 'string', const: 'https://id.inrupt.com/' + $route.params.user },
               name: { type: 'string' },
               pronouns: { type: 'string' },
               bio: { type: 'string' },
