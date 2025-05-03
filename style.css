@@ -9,6 +9,15 @@ body {
   --page-padding: 0.5rem;
 }
 
+#app {
+  height: 100dvh;
+  box-sizing: border-box;
+  padding: var(--page-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-padding);
+}
+
 button,
 input {
   background-color: white;
@@ -25,10 +34,11 @@ a {
 }
 
 .login-page {
-  height: 100dvh;
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto;
 }
 
 .login-container {
@@ -84,12 +94,11 @@ header h1 {
 }
 
 .home-page {
-  height: 100dvh;
-  box-sizing: border-box;
-  padding: var(--page-padding);
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: var(--page-padding);
+  overflow: auto;
 }
 
 .home-container {
@@ -226,12 +235,11 @@ form.send input[type="text"] {
 }
 
 .profile-page {
-  height: 100dvh;
-  box-sizing: border-box;
-  padding: var(--page-padding);
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: var(--page-padding);
+  overflow: auto;
 }
 
 .profile-container {

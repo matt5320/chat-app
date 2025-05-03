@@ -1,5 +1,3 @@
-import { defineAsyncComponent } from "vue";
-import { Topbar } from "./topbar.js";
 export async function Profile() {
   return {
     data() {
@@ -10,9 +8,6 @@ export async function Profile() {
         schedule: "busy at work :/",
         bio: "",
       };
-    },
-    components: {
-      Topbar: defineAsyncComponent(Topbar),
     },
     methods: {
       async editProfile(url, session) {

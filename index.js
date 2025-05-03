@@ -6,6 +6,7 @@ import { GraffitiPlugin } from "@graffiti-garden/wrapper-vue";
 import { Login } from "./login.js";
 import { Home } from "./home.js";
 import { Profile } from "./profile.js";
+import { Topbar } from "./topbar.js";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -19,6 +20,7 @@ const router = createRouter({
 
 createApp({
   components: {
+    Topbar: defineAsyncComponent(Topbar),
     Login: defineAsyncComponent(Login),
   },
 })
