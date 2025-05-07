@@ -8,7 +8,7 @@ export async function Messenger() {
         message: "",
       };
     },
-    template: await fetch("./Components/messenger.html").then((r) => r.text()),
+    template: await fetch("./components/messenger.html").then((r) => r.text()),
     methods: {
       self(object, session) {
         return object.actor === session.value.actor ? " self" : "";

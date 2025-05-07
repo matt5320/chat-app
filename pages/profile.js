@@ -40,7 +40,7 @@ export async function Profile() {
         );
       },
     },
-    template: await fetch("./profile.html").then((r) => r.text()),
+    template: await fetch("./pages/profile.html").then((r) => r.text()),
     mounted() {
       if (!this.$graffitiSession.value) {
         this.$router.push("/");

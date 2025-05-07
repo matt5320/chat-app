@@ -58,6 +58,6 @@ export async function Login() {
         }
       },
     },
-    template: await fetch("./login.html").then((r) => r.text()),
+    template: await fetch("./pages/login.html").then((r) => r.text()),
   };
 }

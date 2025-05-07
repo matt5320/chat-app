@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from "vue";
-import { ChatList } from "./Components/chat-list.js";
-import { Messenger } from "./Components/messenger.js";
+import { ChatList } from "../components/chat-list.js";
+import { Messenger } from "../components/messenger.js";
 
 export async function Home() {
   return {
@@ -8,7 +8,7 @@ export async function Home() {
       ChatList: defineAsyncComponent(ChatList),
       Messenger: defineAsyncComponent(Messenger),
     },
-    template: await fetch("./home.html").then((r) => r.text()),
+    template: await fetch("./pages/home.html").then((r) => r.text()),
     mounted() {
       if (!this.$graffitiSession.value) {
         this.$router.push("/");

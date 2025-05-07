@@ -3,10 +3,10 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import { GraffitiLocal } from "@graffiti-garden/implementation-local";
 import { GraffitiRemote } from "@graffiti-garden/implementation-remote";
 import { GraffitiPlugin } from "@graffiti-garden/wrapper-vue";
-import { Login } from "./login.js";
-import { Home } from "./home.js";
-import { Profile } from "./profile.js";
-import { Topbar } from "./Components/topbar.js";
+import { Login } from "./pages/login.js";
+import { Home } from "./pages/home.js";
+import { Profile } from "./pages/profile.js";
+import { Topbar } from "./components/topbar.js";
 
 const router = createRouter({
   history: createWebHashHistory(),
