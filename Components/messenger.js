@@ -1,4 +1,4 @@
-import { gc } from "./group-chat.js";
+import { gc } from "../group-chat.js";
 
 export async function Messenger() {
   return {
@@ -8,7 +8,7 @@ export async function Messenger() {
         message: "",
       };
     },
-    template: await fetch("./messenger.html").then((r) => r.text()),
+    template: await fetch("./Components/messenger.html").then((r) => r.text()),
     methods: {
       self(object, session) {
         return object.actor === session.value.actor ? " self" : "";

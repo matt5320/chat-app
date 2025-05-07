@@ -1,4 +1,4 @@
-import { gc } from "./group-chat.js";
+import { gc } from "../group-chat.js";
 
 export async function Chat() {
   return {
@@ -25,6 +25,6 @@ export async function Chat() {
           .pop()?.value.content;
       },
     },
-    template: await fetch("./chat.html").then((r) => r.text()),
+    template: await fetch("./Components/chat.html").then((r) => r.text()),
   };
 }

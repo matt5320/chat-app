@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from "vue";
-import { ChatList } from "./chat-list.js";
-import { Messenger } from "./messenger.js";
+import { ChatList } from "./Components/chat-list.js";
+import { Messenger } from "./Components/messenger.js";
 
 export async function Home() {
   return {

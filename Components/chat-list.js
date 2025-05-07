@@ -27,6 +27,6 @@ export async function ChatList() {
         );
       },
     },
-    template: await fetch("./chat-list.html").then((r) => r.text()),
+    template: await fetch("./Components/chat-list.html").then((r) => r.text()),
   };
 }
