@@ -1,0 +1,66 @@
+<div class="schedule-editor-container">
+  <div class="schedule-editor-header">
+    <h2>
+      {{name}}
+      <span class="material-symbols-outlined" @click="changeName()">
+        edit
+      </span>
+    </h2>
+    <span class="material-symbols-outlined" @click="cancel()"> close </span>
+    <span class="material-symbols-outlined" @click="save()"> check </span>
+  </div>
+  <div class="schedule-editor-time-selector">
+    <label for="from">From: </label>
+    <input type="time" v-model="from" />
+    <label for="to">To: </label>
+    <input type="time" v-model="to" />
+  </div>
+  <h3>Recurrence</h3>
+  <div class="schedule-editor-recurrence-selector">
+    <label for="daily" class="recurrence-option">
+      <input type="radio" value="daily" id="daily" v-model="selected" />
+      Daily
+    </label>
+    <label for="weekly" class="recurrence-option">
+      <input type="radio" value="weekly" id="weekly" v-model="selected" />
+      Weekly
+      <div class="weekly-selector">
+        <span
+          :class="'weekly-select' + (sun ? ' selected' : '')"
+          @click="sun = !sun"
+          >S</span
+        >
+        <span
+          :class="'weekly-select' + (mon ? ' selected' : '')"
+          @click="mon = !mon"
+          >M</span
+        >
+        <span
+          :class="'weekly-select' + (tue ? ' selected' : '')"
+          @click="tue = !tue"
+          >T</span
+        >
+        <span
+          :class="'weekly-select' + (wed ? ' selected' : '')"
+          @click="wed = !wed"
+          >W</span
+        >
+        <span
+          :class="'weekly-select' + (thu ? ' selected' : '')"
+          @click="thu = !thu"
+          >T</span
+        >
+        <span
+          :class="'weekly-select' + (fri ? ' selected' : '')"
+          @click="fri = !fri"
+          >F</span
+        >
+        <span
+          :class="'weekly-select' + (sat ? ' selected' : '')"
+          @click="sat = !sat"
+          >S</span
+        >
+      </div>
+    </label>
+  </div>
+</div>

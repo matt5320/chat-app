@@ -294,3 +294,202 @@ form.send input[type="text"] {
 .profile-bubble-attribute p {
   margin-top: 0.125rem;
 }
+
+.schedules-page {
+  flex: 1 1 auto;
+  display: flex;
+  gap: var(--page-padding);
+  overflow: auto;
+}
+
+.schedules-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  padding-right: 0;
+  width: fit-content;
+  min-width: 300px;
+}
+
+.schedules {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow: scroll;
+  padding-right: 0.5rem;
+}
+
+.schedules-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+.schedule {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  user-select: none;
+}
+
+.schedule:hover {
+  background-color: rgb(247, 247, 247);
+}
+
+.schedule-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.schedule .drag {
+  cursor: grab;
+}
+
+.schedule .drag:hover {
+  color: gray;
+}
+
+.schedule h3 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.schedule-right {
+  display: flex;
+  height: 80%;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  aspect-ratio: 4 / 2;
+  /* width: 60px; */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: lightgray;
+  transition: 0.4s;
+  border-radius: calc(1px * infinity);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 80%;
+  aspect-ratio: 1 / 1;
+  left: 5%;
+  top: 10%;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: rgb(0, 157, 255);
+}
+
+input:checked + .slider:before {
+  transform: translateX(125%);
+}
+
+.schedule-editor-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: fit-content;
+  height: fit-content;
+  min-width: 300px;
+}
+
+.schedule-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.schedule-editor-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+}
+
+.schedule-editor-time-selector {
+  display: grid;
+  grid-template-columns: min-content auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.schedule-editor-recurrence-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recurrence-option {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.weekly-selector {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.weekly-select {
+  --text: #000;
+  --border: #000;
+  --bg: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: small;
+  height: 1rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  color: var(--text);
+  border: 1px var(--border) solid;
+  background-color: var(--bg);
+  transition: 0.2s;
+}
+
+.disabled {
+  --text: rgb(120, 120, 120);
+  --border: rgb(120, 120, 120);
+  --bg: #fff;
+}
+
+.selected {
+  --text: #fff;
+  --border: rgb(0, 157, 255);
+  --bg: rgb(0, 157, 255);
+}

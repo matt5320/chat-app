@@ -1,0 +1,45 @@
+<div class="schedules-page">
+  <div class="schedules-container">
+    <div class="schedules-header">
+      <h2>Schedules</h2>
+      <span class="material-symbols-outlined create" @click="createSchedule()">
+        edit_square
+      </span>
+    </div>
+    <div class="schedules">
+      <graffiti-discover
+        v-slot="{ objects, isInitialPolling }"
+        :channels="[$graffitiSession.value.actor]"
+        :schema="{
+          properties: {
+            value: {
+              required: ['activity', 'object'],
+              properties: {
+                activity: {type: 'string', const: 'Schedule'},
+                object: {
+                  properties: {
+                    value: {
+                      required: ['name', 'activated', 'from', 'to', 'recurrence'],
+                      name: 'string',
+                      activated: 'boolean',
+                      from: 'string',
+                      to: 'string',
+                      recurrence: 'object'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }"
+      >
+        <schedule
+          v-for="obj in objects"
+          :schedule="obj"
+          @click="selectSchedule(obj)"
+        ></schedule>
+      </graffiti-discover>
+    </div>
+  </div>
+  <schedule-editor v-if="Object.keys(getSchedule).length > 0"></schedule-editor>
+</div>

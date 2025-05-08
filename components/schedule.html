@@ -1,0 +1,12 @@
+<div class="schedule">
+  <div class="schedule-left" style="display: flex; gap: 0.5rem">
+    <span class="material-symbols-outlined drag"> menu </span>
+    <h3>{{schedule.value.object.name}}</h3>
+  </div>
+  <div class="schedule-right">
+    <toggle-switch
+      :activated="schedule.value.object.activated"
+      @click.prevent="toggleActivated()"
+    ></toggle-switch>
+  </div>
+</div>
