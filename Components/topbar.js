@@ -1,5 +1,5 @@
 export async function Topbar() {
   return {
-    template: await fetch("./components/topbar.html").then((r) => r.text()),
+    template: await fetch("./topbar.html").then((r) => r.text()),
   };
 }
