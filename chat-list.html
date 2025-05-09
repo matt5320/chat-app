@@ -10,7 +10,7 @@
   </div>
   <graffiti-discover
     v-slot="{ objects, isInitialPolling }"
-    :channels="[$graffitiSession.value.actor]"
+    :channels="[$graffitiSession.value?.actor]"
     :schema="{
       properties: {
         value: {

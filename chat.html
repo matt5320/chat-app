@@ -29,7 +29,7 @@
       <h2>{{ getProfileNames(profiles).join(', ')}}</h2>
       <graffiti-discover
         v-slot="{ objects: messageObjects, isInitialPolling }"
-        :channels="[$graffitiSession.value.actor]"
+        :channels="[$graffitiSession.value?.actor]"
         :schema="{
           properties: {
             value: {
