@@ -3,11 +3,11 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import { GraffitiLocal } from "@graffiti-garden/implementation-local";
 import { GraffitiRemote } from "@graffiti-garden/implementation-remote";
 import { GraffitiPlugin } from "@graffiti-garden/wrapper-vue";
-import { Login } from "./pages/login.js";
-import { Home } from "./pages/home.js";
-import { Profile } from "./pages/profile.js";
-import { Schedules } from "./pages/schedules.js";
-import { Topbar } from "./components/topbar.js";
+import { Login } from "./login.js";
+import { Home } from "./home.js";
+import { Profile } from "./profile.js";
+import { Schedules } from "./schedules.js";
+import { Topbar } from "./topbar.js";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -27,8 +27,8 @@ createApp({
   },
 })
   .use(GraffitiPlugin, {
-    // graffiti: new GraffitiLocal(),
-    graffiti: new GraffitiRemote(),
+    graffiti: new GraffitiLocal(),
+    // graffiti: new GraffitiRemote(),
   })
   .use(router)
   .mount("#app");
