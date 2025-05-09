@@ -21,9 +21,7 @@ export async function ScheduleEditor() {
       };
     },
     props: ["schedule"],
-    template: await fetch("./components/schedule-editor.html").then((r) =>
-      r.text()
-    ),
+    template: await fetch("./schedule-editor.html").then((r) => r.text()),
     methods: {
       cancel() {
         for (const key in schedule) {

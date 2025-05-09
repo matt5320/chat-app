@@ -25,6 +25,6 @@ export async function Chat() {
           .pop()?.value.content;
       },
     },
-    template: await fetch("./components/chat.html").then((r) => r.text()),
+    template: await fetch("./chat.html").then((r) => r.text()),
   };
 }

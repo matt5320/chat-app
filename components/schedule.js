@@ -32,6 +32,6 @@ export async function Schedule() {
         );
       },
     },
-    template: await fetch("./components/schedule.html").then((r) => r.text()),
+    template: await fetch("./schedule.html").then((r) => r.text()),
   };
 }
