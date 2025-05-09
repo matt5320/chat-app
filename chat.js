@@ -1,4 +1,4 @@
-import { gc } from "../group-chat.js";
+import { gc } from "./group-chat.js";
 
 export async function Chat() {
   return {

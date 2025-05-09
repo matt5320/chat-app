@@ -1,7 +1,7 @@
 import { defineAsyncComponent } from "vue";
-import { Schedule } from "../components/schedule.js";
-import { ScheduleEditor } from "../components/schedule-editor.js";
-import { schedule } from "../schedule.js";
+import { Schedule } from "./schedule.js";
+import { ScheduleEditor } from "./schedule-editor.js";
+import { schedule } from "./selected-schedule.js";
 
 export async function Schedules() {
   return {
@@ -52,7 +52,7 @@ export async function Schedules() {
         return schedule;
       },
     },
-    template: await fetch("./pages/schedules.html").then((r) => r.text()),
+    template: await fetch("./schedules.html").then((r) => r.text()),
     mounted() {
       if (!this.$graffitiSession.value) {
         this.$router.push("/");
