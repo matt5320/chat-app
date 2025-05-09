@@ -14,8 +14,9 @@ export async function Schedules() {
         await this.$graffiti.put(
           {
             value: {
-              activity: "Schedule",
+              activity: "Create",
               object: {
+                type: "Schedule",
                 name: "New Schedule",
                 activated: true,
                 from: "",

@@ -1,28 +1,50 @@
-<div class="chat" @click="selectGroupChat($event)">
+<div
+  :class="'chat' + (selected ? ' selected' : '')"
+  @click="selectConversation()"
+>
   <img
     class="chat-icon"
     src=""
     onerror="this.src='./assets/default-user-icon.svg'"
     alt=""
   />
-  <div class="chat-text">
-    <h2>{{ groupChat.value.object.name }}</h2>
-    <graffiti-discover
-      v-slot="{ objects: messageObjects, isInitialPolling }"
-      :channels="[groupChat.value.object.channel]"
-      :schema="{
-        properties: {
-          value: {
-            required: ['content', 'published'],
-            properties: {
-              content: { type: 'string' },
-              published: { type: 'number' }
+  <graffiti-discover
+    v-slot="{ objects: profiles, isInitialPolling }"
+    :channels="['designftw-2025-studio2', 'designftw']"
+    :schema="{
+      properties: {
+        value: {
+          required: ['describes', 'name', 'pronouns', 'bio'],
+          properties: {
+            describes: { type: 'string', enum: otherActors },
+            name: { type: 'string' },
+            pronouns: { type: 'string' },
+            bio: { type: 'string' },
+          },
+        }
+      }
+    }"
+  >
+    <div class="chat-text">
+      <h2>{{ getProfileNames(profiles).join(', ')}}</h2>
+      <graffiti-discover
+        v-slot="{ objects: messageObjects, isInitialPolling }"
+        :channels="[$graffitiSession.value.actor]"
+        :schema="{
+          properties: {
+            value: {
+              required: ['content', 'published', 'conversation'],
+              properties: {
+                content: { type: 'string' },
+                published: { type: 'number' },
+                conversation: { type: 'string', const: chat.url }
+              }
             }
           }
-        }
-      }"
-    >
-      <p>{{getLastMessage(messageObjects) ?? "..."}}</p>
-    </graffiti-discover>
-  </div>
+        }"
+      >
+        <p>{{getLastMessage(messageObjects) ?? "..."}}</p>
+      </graffiti-discover>
+    </div>
+  </graffiti-discover>
 </div>

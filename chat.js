@@ -1,28 +1,42 @@
-import { gc } from "./group-chat.js";
+import { convo } from "./conversation.js";
 
 export async function Chat() {
   return {
-    props: ["groupChat"],
+    data() {
+      return {
+        otherActors: this.chat.value.object.actors.filter(
+          (actor) => actor !== this.$graffitiSession.value.actor
+        ),
+      };
+    },
+    props: ["chat"],
     methods: {
-      selectGroupChat(e) {
-        document.querySelectorAll(".chat.selected").forEach((el) => {
-          el.classList.remove("selected");
-        });
-        let target = e.target;
-        while (target !== null) {
-          if (target.classList.contains("chat")) break;
-          target = target.parentElement;
-        }
-        target?.classList.add("selected");
-
-        gc.name = this.groupChat.value.object.name;
-        gc.channel = this.groupChat.value.object.channel;
-        gc.url = this.groupChat.url;
+      selectConversation() {
+        convo.otherActors = this.otherActors;
+        convo.url = this.chat.url;
       },
       getLastMessage(objects) {
         return objects
           .toSorted((a, b) => a.value.published - b.value.published)
           .pop()?.value.content;
+      },
+      getProfileNames(profiles) {
+        return this.otherActors.map((actor) => {
+          for (const profile of profiles) {
+            if (profile.value.describes === actor) return profile.value.name;
+          }
+          return actor;
+        });
+      },
+    },
+    computed: {
+      selected() {
+        if (!convo.otherActors) return false;
+
+        return (
+          convo.otherActors.filter((actor) => !this.otherActors.includes(actor))
+            .length === 0
+        );
       },
     },
     template: await fetch("./chat.html").then((r) => r.text()),

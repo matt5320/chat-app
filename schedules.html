@@ -15,17 +15,16 @@
             value: {
               required: ['activity', 'object'],
               properties: {
-                activity: {type: 'string', const: 'Schedule'},
+                activity: {type: 'string', const: 'Create'},
                 object: {
+                  required: ['type', 'name', 'activated', 'from', 'to', 'recurrence'],
                   properties: {
-                    value: {
-                      required: ['name', 'activated', 'from', 'to', 'recurrence'],
-                      name: 'string',
-                      activated: 'boolean',
-                      from: 'string',
-                      to: 'string',
-                      recurrence: 'object'
-                    }
+                    type: { type: 'string', const: 'Schedule'},
+                    name: { type: 'string'},
+                    activated: { type: 'boolean'},
+                    from: { type: 'string'},
+                    to: { type: 'string'},
+                    recurrence: { type: 'object'}
                   }
                 }
               }

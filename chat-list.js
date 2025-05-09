@@ -3,27 +3,24 @@ import { Chat } from "./chat.js";
 
 export async function ChatList() {
   return {
-    data() {
-      return {
-        channels: ["designftw"],
-      };
-    },
     components: { Chat: defineAsyncComponent(Chat) },
     methods: {
-      async createGroupChat(session) {
+      async createConversation() {
+        const actor = prompt("Actor URI:");
+        if (actor === null) return;
         await this.$graffiti.put(
           {
             value: {
               activity: "Create",
               object: {
-                type: "Group Chat",
-                name: "My Group Chat", // Make this editable
-                channel: crypto.randomUUID(), // This creates a random string
+                type: "Conversation",
+                actors: [this.$graffitiSession.value.actor, actor],
               },
             },
-            channels: ["designftw"],
+            channels: [this.$graffitiSession.value.actor, actor],
+            allowed: [this.$graffitiSession.value.actor, actor],
           },
-          session
+          this.$graffitiSession.value
         );
       },
     },

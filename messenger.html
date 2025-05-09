@@ -1,26 +1,19 @@
 <div class="messenger-container">
   <div class="messenger-header">
-    <h2 class="messenger-title">{{getGC.name}}</h2>
-    <span
-      class="material-symbols-outlined"
-      v-if="getGC.name"
-      @click="changeGCName($graffitiSession)"
-    >
-      info
-    </span>
+    <h2 class="messenger-title">{{getConvo.otherActors?.join(', ')}}</h2>
   </div>
   <div class="messages-container">
     <graffiti-discover
-      v-if="getGC.channel"
       v-slot="{ objects, isInitialPolling }"
-      :channels="[getGC.channel]"
+      :channels="[$graffitiSession.value.actor]"
       :schema="{
         properties: {
           value: {
-            required: ['content', 'published'],
+            required: ['content', 'published', 'conversation'],
             properties: {
               content: { type: 'string' },
-              published: { type: 'number' }
+              published: { type: 'number' },
+              conversation: { type: 'string', const: getConvo.url ?? '' }
             }
           }
         }
@@ -39,12 +32,12 @@
       v-model="message"
       placeholder="Message"
       ref="messageInput"
-      :disabled="getGC.channel === '' || !$graffitiSession.value"
+      :disabled="!getConvo.otherActors"
     />
     <input
       type="submit"
       value="Send"
-      :disabled="sending || getGC.channel === '' || !$graffitiSession.value"
+      :disabled="sending || !getConvo.otherActors"
     />
   </form>
 </div>

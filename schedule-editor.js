@@ -1,4 +1,3 @@
-// import { gc } from "../group-chat.js";
 import { schedule } from "./selected-schedule.js";
 
 export async function ScheduleEditor() {

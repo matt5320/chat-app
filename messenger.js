@@ -1,4 +1,4 @@
-import { gc } from "./group-chat.js";
+import { convo } from "./conversation.js";
 
 export async function Messenger() {
   return {
@@ -23,8 +23,9 @@ export async function Messenger() {
             value: {
               content: this.message,
               published: Date.now(),
+              conversation: convo.url,
             },
-            channels: [gc.channel],
+            channels: [...convo.otherActors, this.$graffitiSession.value.actor],
           },
           session
         );
@@ -37,29 +38,10 @@ export async function Messenger() {
         this.$refs.messageInput.focus();
         document.querySelector(".messages-container").scroll(0, 0);
       },
-      async changeGCName(session) {
-        const name = prompt("New name:");
-
-        if (name === "") return;
-
-        await this.$graffiti.patch(
-          {
-            value: [
-              {
-                op: "replace",
-                path: "/object/name",
-                value: name,
-              },
-            ],
-          },
-          gc.url,
-          session
-        );
-      },
     },
     computed: {
-      getGC() {
-        return gc;
+      getConvo() {
+        return convo;
       },
     },
   };

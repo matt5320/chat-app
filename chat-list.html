@@ -3,35 +3,31 @@
     <h2>Chats</h2>
     <span
       class="material-symbols-outlined create"
-      @click="createGroupChat($graffitiSession.value)"
+      @click="createConversation()"
     >
       edit_square
     </span>
   </div>
   <graffiti-discover
-    v-slot="{ objects: groupChats, isInitialPolling }"
-    :channels="channels"
+    v-slot="{ objects, isInitialPolling }"
+    :channels="[$graffitiSession.value.actor]"
     :schema="{
-    properties: {
-      value: {
-        required: ['activity', 'object'],
-        properties: {
-          activity: {type: 'string'},
-          object: {
-            properties: {
-              value: {
-                required: ['type', 'name', 'channel'],
-                type: 'string',
-                name: 'string',
-                channel: 'string'
+      properties: {
+        value: {
+          required: ['activity', 'object'],
+          properties: {
+            activity: {type: 'string', const: 'Create'},
+            object: {
+              required: ['type'],
+              properties: {
+                type: { type: 'string', const: 'Conversation'}
               }
             }
           }
         }
       }
-    }
-  }"
+    }"
   >
-    <chat v-for="gc of groupChats" :group-chat="gc"></chat>
+    <chat v-for="obj of objects" :chat="obj"></chat>
   </graffiti-discover>
 </div>

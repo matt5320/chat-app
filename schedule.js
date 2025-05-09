@@ -1,4 +1,3 @@
-// import { gc } from "../group-chat.js";
 import { defineAsyncComponent } from "vue";
 import { ToggleSwitch } from "./toggle-switch.js";
 

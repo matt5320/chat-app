@@ -1,3 +1,5 @@
+import { convo } from "./conversation.js";
+
 export async function Login() {
   return {
     methods: {
@@ -57,6 +59,11 @@ export async function Login() {
           });
         }
       },
+    },
+    mounted() {
+      for (const key in convo) {
+        delete convo[key];
+      }
     },
     template: await fetch("./login.html").then((r) => r.text()),
   };
