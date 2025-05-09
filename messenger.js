@@ -38,6 +38,15 @@ export async function Messenger() {
         this.$refs.messageInput.focus();
         document.querySelector(".messages-container").scroll(0, 0);
       },
+      getProfileNames(profiles) {
+        if (!convo.otherActors) return [];
+        return convo.otherActors.map((actor) => {
+          for (const profile of profiles) {
+            if (profile.value.describes === actor) return profile.value.name;
+          }
+          return actor;
+        });
+      },
     },
     computed: {
       getConvo() {
