@@ -1,32 +1,62 @@
 <div class="messenger-container">
-  <div class="messenger-header">
+  <graffiti-discover
+    v-slot="{ objects: profiles, isInitialPolling }"
+    :channels="['designftw-2025-studio2', 'designftw']"
+    :schema="{
+      properties: {
+        value: {
+          required: ['describes', 'name', 'pronouns', 'bio'],
+          properties: {
+            describes: { type: 'string', enum: getConvo.otherActors },
+            name: { type: 'string' },
+            pronouns: { type: 'string' },
+            bio: { type: 'string' },
+          },
+        }
+      }
+    }"
+  >
     <graffiti-discover
-      v-slot="{ objects: profiles, isInitialPolling }"
-      :channels="['designftw-2025-studio2', 'designftw']"
+      v-slot="{ objects: schedules, isInitialPolling }"
+      :channels="getConvo?.otherActors ?? []"
       :schema="{
         properties: {
           value: {
-            required: ['describes', 'name', 'pronouns', 'bio'],
+            required: ['activity', 'object'],
             properties: {
-              describes: { type: 'string', enum: getConvo.otherActors },
-              name: { type: 'string' },
-              pronouns: { type: 'string' },
-              bio: { type: 'string' },
-            },
+              activity: {type: 'string', const: 'Create'},
+              object: {
+                required: ['type', 'name', 'activated', 'from', 'to', 'recurrence'],
+                properties: {
+                  type: { type: 'string', const: 'Schedule'},
+                  name: { type: 'string'},
+                  activated: { type: 'boolean'},
+                  from: { type: 'string'},
+                  to: { type: 'string'},
+                  recurrence: { type: 'object'}
+                }
+              }
+            }
           }
         }
       }"
     >
-      <h2 class="messenger-title">
-        {{ getProfileNames(profiles).join(', ') }}
-      </h2>
-    </graffiti-discover>
-  </div>
-  <div class="messages-container">
-    <graffiti-discover
-      v-slot="{ objects, isInitialPolling }"
-      :channels="[$graffitiSession.value?.actor]"
-      :schema="{
+      <div class="busy" v-if="isBusy(schedules)">
+        {{getProfileNames(profiles)[0]}} is currently busy with {{
+        schedules.map((schedule) => schedule.value.object.name).join(', ')}}
+      </div>
+      <div class="messenger-header">
+        <h2 class="messenger-title">
+          {{ getProfileNames(profiles).join(', ') }}
+        </h2>
+      </div>
+      <div
+        :class="'messages-container' + (isBusy(schedules) ? ' disabled' : '')"
+      >
+        <graffiti-discover
+          v-slot="{ objects, isInitialPolling }"
+          :channels="[$graffitiSession.value?.actor]"
+          :schema="{
         properties: {
           value: {
             required: ['content', 'published', 'conversation'],
@@ -38,26 +68,28 @@
           }
         }
       }"
-    >
-      <span
-        v-for="object of objects.toSorted((a, b) => b.value.published - a.value.published)"
-        :class="'message' + self(object, $graffitiSession)"
-        >{{ object.value.content }}
-      </span>
+        >
+          <span
+            v-for="object of objects.toSorted((a, b) => b.value.published - a.value.published)"
+            :class="'message' + self(object, $graffitiSession)"
+            >{{ object.value.content }}
+          </span>
+        </graffiti-discover>
+      </div>
+      <form class="send" @submit.prevent="sendMessage($graffitiSession.value)">
+        <input
+          type="text"
+          v-model="message"
+          placeholder="Message"
+          ref="messageInput"
+          :disabled="!getConvo.otherActors || isBusy(schedules)"
+        />
+        <input
+          type="submit"
+          value="Send"
+          :disabled="sending || !getConvo.otherActors || isBusy(schedules)"
+        />
+      </form>
     </graffiti-discover>
-  </div>
-  <form class="send" @submit.prevent="sendMessage($graffitiSession.value)">
-    <input
-      type="text"
-      v-model="message"
-      placeholder="Message"
-      ref="messageInput"
-      :disabled="!getConvo.otherActors"
-    />
-    <input
-      type="submit"
-      value="Send"
-      :disabled="sending || !getConvo.otherActors"
-    />
-  </form>
+  </graffiti-discover>
 </div>

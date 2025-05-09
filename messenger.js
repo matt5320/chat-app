@@ -47,6 +47,33 @@ export async function Messenger() {
           return actor;
         });
       },
+      isCurrentTimeBetween(startTime, endTime) {
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+        const [startHours, startMinutes] = startTime.split(":").map(Number);
+        const [endHours, endMinutes] = endTime.split(":").map(Number);
+
+        const startTotalMinutes = startHours * 60 + startMinutes;
+        const endTotalMinutes = endHours * 60 + endMinutes;
+
+        return (
+          currentMinutes >= startTotalMinutes &&
+          currentMinutes <= endTotalMinutes
+        );
+      },
+      isBusy(schedules) {
+        for (const schedule of schedules) {
+          if (
+            this.isCurrentTimeBetween(
+              schedule.value.object.from,
+              schedule.value.object.to
+            )
+          )
+            return true;
+        }
+        return false;
+      },
     },
     computed: {
       getConvo() {
