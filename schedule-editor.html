@@ -24,7 +24,9 @@
     <label for="weekly" class="recurrence-option">
       <input type="radio" value="weekly" id="weekly" v-model="selected" />
       Weekly
-      <div class="weekly-selector">
+      <div
+        :class="'weekly-selector' + (selected === 'daily' ? ' disabled' : '')"
+      >
         <span
           :class="'weekly-select' + (sun ? ' selected' : '')"
           @click="sun = !sun"

@@ -463,6 +463,7 @@ input:checked + .slider:before {
   flex: 1 1 auto;
   display: flex;
   justify-content: space-around;
+  transition: 0.2s;
 }
 
 .weekly-select {
@@ -483,9 +484,7 @@ input:checked + .slider:before {
 }
 
 .disabled {
-  --text: rgb(120, 120, 120);
-  --border: rgb(120, 120, 120);
-  --bg: #fff;
+  opacity: 50%;
 }
 
 .selected {
