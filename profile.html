@@ -1,8 +1,32 @@
 <div class="profile-page">
-  <div class="profile-container">
-    <div class="profile-bubble">
+  <graffiti-discover
+    v-slot="{ objects: schedules, isInitialPolling }"
+    :channels="[$graffitiSession.value?.actor]"
+    :schema="{
+          properties: {
+            value: {
+              required: ['activity', 'object'],
+              properties: {
+                activity: {type: 'string', const: 'Create'},
+                object: {
+                  required: ['type', 'name', 'activated', 'from', 'to', 'recurrence'],
+                  properties: {
+                    type: { type: 'string', const: 'Schedule'},
+                    name: { type: 'string'},
+                    activated: { type: 'boolean'},
+                    from: { type: 'string'},
+                    to: { type: 'string'},
+                    recurrence: { type: 'object'}
+                  }
+                }
+              }
+            }
+          }
+        }"
+  >
+    <div class="profile-container">
       <graffiti-discover
-        v-slot="{ objects, isInitialPolling }"
+        v-slot="{ objects: profiles, isInitialPolling }"
         :channels="['designftw-2025-studio2', 'designftw']"
         :schema="{
         properties: {
@@ -14,42 +38,87 @@
               pronouns: { type: 'string' },
               bio: { type: 'string' },
             },
-          },
+          }
         }
       }"
       >
-        <div class="profile-header">
-          <img
-            class="profile-header-icon"
-            src=""
-            onerror="this.src='./assets/default-user-icon.svg'"
-            alt=""
-          />
-          <div class="profile-header-text">
-            <h2>{{ objects[0]?.value.name }}</h2>
-            <p>{{ objects[0]?.value.pronouns }}</p>
-          </div>
-          <span
-            v-if="decodeURIComponent($route.params.user) === $graffitiSession.value?.actor"
-            class="material-symbols-outlined profile-edit-button"
-            @click="editProfile(objects[0]?.url,$graffitiSession)"
+        <div class="profile-card">
+          <div
+            class="edit-buttons"
+            v-if="$graffitiSession.value?.actor === decodeURIComponent($route.params.user)"
           >
-            edit
-          </span>
-        </div>
-        <div class="profile-bubble-attribute">
-          <span class="material-symbols-outlined"> groups </span>
-          <p>{{ friends.length }}</p>
-        </div>
-        <div class="profile-bubble-attribute">
-          <span class="material-symbols-outlined"> schedule </span>
-          <p>{{ schedule }}</p>
-        </div>
-        <div class="profile-bubble-attribute">
-          <span class="material-symbols-outlined"> person_book </span>
-          <p>{{ objects[0]?.value.bio }}</p>
+            <span
+              class="material-symbols-outlined create"
+              v-if="!editing"
+              @click="editing = true"
+            >
+              edit_square
+            </span>
+            <div v-else @click="editing = false">
+              <span
+                class="material-symbols-outlined create"
+                @click="cancel(profiles[0]?.value)"
+              >
+                close
+              </span>
+              <span
+                class="material-symbols-outlined create"
+                @click="update(profiles[0]?.url)"
+              >
+                check
+              </span>
+            </div>
+          </div>
+          <div class="profile-card-header">
+            <img
+              class="profile-header-icon"
+              src=""
+              onerror="this.src='./assets/default-user-icon.svg'"
+              alt=""
+            />
+            <div class="profile-card-name" v-if="!editing">
+              <h2 style="align-self: end">{{profiles[0]?.value.name}}</h2>
+              <p>{{profiles[0]?.value.pronouns}}</p>
+            </div>
+            <div class="profile-card-name" v-else>
+              <input type="text" v-model="name" placeholder="Name" />
+              <input type="text" v-model="pronouns" placeholder="Pronouns" />
+            </div>
+          </div>
+          <div class="profile-card-attributes">
+            <div class="profile-card-attribute">
+              <span class="material-symbols-outlined"> groups </span>
+              <p>{{ friends.length }}</p>
+            </div>
+            <div class="profile-card-attribute">
+              <span class="material-symbols-outlined"> schedule </span>
+              <p v-if="isBusy(schedules)">
+                Busy with {{isBusy(schedules).value.object.name}} until
+                {{isBusy(schedules).value.object.to }}
+              </p>
+              <p v-else></p>
+            </div>
+            <div class="profile-card-attribute">
+              <span
+                class="material-symbols-outlined"
+                style="align-self: self-start"
+              >
+                person_book
+              </span>
+              <p v-if="!editing">{{profiles[0]?.value.bio}}</p>
+              <textarea v-else v-model="bio"></textarea>
+            </div>
+          </div>
         </div>
       </graffiti-discover>
+      <div class="schedule-card">
+        <h2>Schedules</h2>
+        <div
+          v-for="obj in schedules.filter(obj => getScheduleTimes(obj.value.object))"
+        >
+          <p>{{getScheduleTimes(obj.value.object)}}</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </graffiti-discover>
 </div>

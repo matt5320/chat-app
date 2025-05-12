@@ -1,0 +1,7 @@
+ - schedules - week view
+ - messenger messages too long
+ - chatlist - multiple convos same person
+ - no convos message
+ - buttons need learnability
+ - responsive design
+ - loading

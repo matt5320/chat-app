@@ -41,9 +41,12 @@
         }
       }"
     >
-      <div class="busy" v-if="isBusy(schedules)">
+      <div class="messenger-banner" v-if="isBusy(schedules)">
         {{getProfileNames(profiles)[0]}} is currently busy with {{
         schedules.map((schedule) => schedule.value.object.name).join(', ')}}
+      </div>
+      <div class="busy" v-if="!getConvo.otherActors">
+        Create a conversation!
       </div>
       <div class="messenger-header">
         <h2 class="messenger-title">
@@ -76,12 +79,16 @@
           </span>
         </graffiti-discover>
       </div>
-      <form class="send" @submit.prevent="sendMessage($graffitiSession.value)">
+      <form
+        :class="'send' + (!getConvo.otherActors || isBusy(schedules) ? ' cursor-not-allowed' : '')"
+        @submit.prevent="sendMessage($graffitiSession.value)"
+      >
         <input
           type="text"
           v-model="message"
           placeholder="Message"
           ref="messageInput"
+          :class="!getConvo.otherActors || isBusy(schedules) ? ' cursor-not-allowed' : ''"
           :disabled="!getConvo.otherActors || isBusy(schedules)"
         />
         <input

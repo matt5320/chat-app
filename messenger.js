@@ -62,9 +62,23 @@ export async function Messenger() {
           currentMinutes <= endTotalMinutes
         );
       },
+      isBusyToday(recurrence) {
+        const dayOfWeek = new Date().getDay();
+        const week = [
+          recurrence.sun,
+          recurrence.mon,
+          recurrence.tue,
+          recurrence.wed,
+          recurrence.thu,
+          recurrence.fri,
+          recurrence.sat,
+        ];
+        return week[dayOfWeek];
+      },
       isBusy(schedules) {
         for (const schedule of schedules) {
           if (
+            this.isBusyToday(schedule.value.object.recurrence) &&
             this.isCurrentTimeBetween(
               schedule.value.object.from,
               schedule.value.object.to
