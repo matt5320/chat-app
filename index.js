@@ -27,8 +27,8 @@ createApp({
   },
 })
   .use(GraffitiPlugin, {
-    graffiti: new GraffitiLocal(),
-    // graffiti: new GraffitiRemote(),
+    // graffiti: new GraffitiLocal(),
+    graffiti: new GraffitiRemote(),
   })
   .use(router)
   .mount("#app");
